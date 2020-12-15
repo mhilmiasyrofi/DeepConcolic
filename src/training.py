@@ -72,7 +72,8 @@ def train_n_save_classifier (model, class_names, input_kind,
                callbacks = callbacks,
                **{'epochs': 20,         # some defaults:
                   'shuffle': True,
-                  'batch_size': 64,
+#                   'batch_size': 32,
+                    'batch_size': 64,
                   'validation_split': 0.2,
                   **valargs,
                   **kwds})

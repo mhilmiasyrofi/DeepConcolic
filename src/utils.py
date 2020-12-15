@@ -287,13 +287,21 @@ def get_layer_functions(dnn):
 
 ### given input images, evaluate activations
 def eval_batch(o, ims, allow_input_layer = False):
+#   print()
+#   print()
+#   print("Shape: ", ims.shape)
+#   print(allow_input_layer)
   layer_functions, has_input_layer = (
     get_layer_functions (o) if isinstance (o, (keras.Sequential, keras.Model))
     # TODO: Check it's sequential? --------------------------------------^
     else o)
+#   print(has_input_layer)
   having_input_layer = allow_input_layer and has_input_layer
   activations = []
+#   print("Enumerate")
   for l, func in enumerate(layer_functions):
+#     print(l)
+#     print(func)
     if not having_input_layer:
       if l==0:
         activations.append(func([ims])[0])
@@ -301,10 +309,14 @@ def eval_batch(o, ims, allow_input_layer = False):
         activations.append(func([activations[l-1]])[0])
     else:
       if l==0:
-        activations.append([]) #activations.append(func([ims])[0])
+#         print(activations)
+        activations.append([])
+#         activations.append(func([ims])[0])
       elif l==1:
+#         print(ims.shape)
         activations.append(func([ims])[0])
       else:
+#         print(activations[l-1].shape)
         activations.append(func([activations[l-1]])[0])
   return activations
 

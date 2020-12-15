@@ -28,6 +28,10 @@ def deepconcolic(criterion, norm, test_object, report_args,
       from nc_l0 import NcL0Analyzer
       l0_args = copy.copy (norm_args)
       del l0_args['LB_noise']
+    
+      print()
+      print("INPUT SHAPE: ", test_object.raw_data.data[0].shape)
+      print()
       engine = nc_setup (test_object = test_object,
                          engine_args = engine_args,
                          setup_analyzer = NcL0Analyzer,
@@ -200,12 +204,13 @@ def main():
   elif args.model!='-1':
     # NB: Eager execution needs to be disabled before any model loading.
     tf.compat.v1.disable_eager_execution ()
-    dnn = keras.models.load_model (args.model)
+    dnn = tf.keras.models.load_model (args.model)
     dnn.summary()
+#     dnn.compile()
   elif args.vgg16:
     # NB: Eager execution needs to be disabled before any model loading.
     tf.compat.v1.disable_eager_execution ()
-    dnn = keras.applications.VGG16 ()
+    dnn = tf.keras.applications.VGG16 ()
     inp_ub = 255
     lower_bound_metric_noise = 1/255
     dnn.summary()

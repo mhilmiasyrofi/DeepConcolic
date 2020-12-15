@@ -36,8 +36,9 @@ choices += ['fashion_mnist']
 def load_fashion_mnist_data ():
     img_rows, img_cols, img_channels = 28, 28, 1
     (x_train, y_train), (x_test, y_test) = tf.keras.datasets.fashion_mnist.load_data ()
-    x_train = x_train.reshape (x_train.shape[0], img_rows, img_cols, img_channels).astype ('float32') / 255
+    x_train = x_train.reshape (x_train.shape[0], img_rows, img_cols, img_channels).astype ('float32') / 255    
     x_test = x_test.reshape (x_test.shape[0], img_rows, img_cols, img_channels).astype ('float32') / 255
+    
     return (x_train, y_train), (x_test, y_test), \
            (img_rows, img_cols, img_channels), 'image', \
            [ 'T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 
@@ -48,9 +49,24 @@ def load_fashion_mnist_data ():
 choices += ['cifar10']
 def load_cifar10_data ():
     img_rows, img_cols, img_channels = 32, 32, 3
-    (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data ()
-    x_train = x_train.reshape (x_train.shape[0], img_rows, img_cols, img_channels).astype ('float32') / 255
-    x_test = x_test.reshape (x_test.shape[0], img_rows, img_cols, img_channels).astype ('float32') / 255
+
+#     print()
+#     print("XXXXXX Data Format: ", tf.keras.backend.image_data_format())
+#     print()
+
+    (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data ()    
+    x_train = x_train.reshape (x_train.shape[0], img_rows, img_cols, img_channels).astype ('float32') / 255.0
+    x_test = x_test.reshape (x_test.shape[0], img_rows, img_cols, img_channels).astype ('float32') / 255.0
+
+#     print("Before transpose: ", x_train.shape)
+#     x_train = x_train.transpose(0, 3, 1, 2).astype ('float32')
+#     print("After transpose: ", x_train.shape)
+
+#     print("Before transpose: ", x_test.shape)
+#     x_test = x_test.transpose(0, 3, 1, 2).astype ('float32')
+#     print("After transpose: ", x_test.shape)
+#     print(type(x_test))
+    
     return (x_train, y_train), (x_test, y_test), \
            (img_rows, img_cols, img_channels), 'image', \
            [ 'airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
